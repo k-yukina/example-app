@@ -1,5 +1,5 @@
 @props([
-    'images' => []
+'images' => []
 ])
 
 <!-- 画像の投稿が1つ以上あればリスト表示 -->
@@ -9,8 +9,10 @@
             @foreach($images as $image)
                 <div class="w-1/6 px-2 mt-5">
                     <div class="bg-gray-400">
-                        <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ asset('storage/images/' . $image->name)  }}' })" class="cursor-pointer">
-                            <img alt="{{ $image->name }}" class="object-fit w-full" src="{{ asset('storage/images/' . $image->name) }}">
+                        <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ image_url($image->name)  }}' })"
+                           class="cursor-pointer">
+                            <img alt="{{ $image->name }}" class="object-fit w-full"
+                                 src="{{ image_url($image->name) }}">
                         </a>
                     </div>
                 </div>
@@ -36,8 +38,11 @@
             <div @click.away="imgModal = ''" class="flex flex-col max-w-3xl max-h-full overflow-auto">
                 <div class="z-50">
                     <button @click="imgModal = ''" class="float-right pt-2 pr-2 outline-none focus:outline-none">
-                        <svg class="fill-current text-white h-5 w-5" xmlns="<http://www.w3.org/2000/svg>" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        <svg class="fill-current text-white h-5 w-5" xmlns="<http://www.w3.org/2000/svg>"
+                             viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"/>
                         </svg>
                     </button>
                 </div>
@@ -52,7 +57,9 @@
     </div>
     @push('css')
         <style>
-            [x-cloak] { display: none !important; }
+            [x-cloak] {
+                display: none !important;
+            }
         </style>
     @endpush
 @endonce

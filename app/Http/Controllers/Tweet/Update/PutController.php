@@ -14,12 +14,12 @@ class PutController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(UpdateRequest $request, TweetService $tweetService)
     {
-        if(!$tweetService->checkOwnTweet($request->user()->id, $request->id())){
+        if (!$tweetService->checkOwnTweet($request->user()->id, $request->id())) {
             throw new AccessDniedHttpException();
         }
         //カラムidと指定したidのレコードをDBから探し出し、tweet配列に入れる

@@ -14,15 +14,15 @@ class DeleteController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request, TweetService $tweetService)
     {
         //つぶやきを取得
-        $tweetId = (int) $request->route('tweetId');
+        $tweetId = (int)$request->route('tweetId');
         //ログインユーザのIDを取得し、checkOwnTweetを実行
-        if(!$tweetService->checkOwnTweet($request->user()->id, $tweetId)){
+        if (!$tweetService->checkOwnTweet($request->user()->id, $tweetId)) {
             //つぶやきを削除できる権限がなければ、Exceptionを返す
             throw new AccessDeniedHttpException();
         }

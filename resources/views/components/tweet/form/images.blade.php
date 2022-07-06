@@ -3,7 +3,7 @@
         <div class="w-full flex my-2">
             <!-- ここから画像保存に関する設定 -->
             <label :for="field.id" class="border border-gray-300 rounded-md p-2 w-full bg-white cursor-pointer">
-                <input type="file" accept="image/*" class="sr-only" :id="field.id" name="images[]" @change="fields[i].file = $event.target.files[0]">
+                <input type="file" accept="image/*" class="sr-only" :id="field.id " name="images[]" @change="fields[i].file = $event.target.files[0]">
                 <span x-text="field.file ? field.file.name : '画像を選択'" class="text-gray-700"></span>
             </label>
             <!-- ここまで -->
@@ -35,7 +35,7 @@
                 const i = this.fields.length;
                 this.fields.push({
                     file: '',
-                    id: 'input-image-${i}'
+                    id: 'input-image-' + i
                 });
             },
             removeField(index){

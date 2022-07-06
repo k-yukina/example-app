@@ -1,20 +1,26 @@
 name: Laravel
 
+#ワークフローを実行するタイミングを設定
 on:
-  push:
-  pull_request:
+  push: #ブランチがプッシュされた時
+  pull_request: #プルリクエストが作成させれた時
 
+#テスト利用のための環境変数設定
 env:
   DB_USERNAME: sail
   DB_PASSWORD: password
   MAIL_FROM_ADDRESS: info@example.com
 
+#ジョブ定義
 jobs:
-  phpunit:
+  phpunit: #ジョブ名は任意
 
-    runs-on: ubuntu-latest
+    #ジョブの実行環境設定
+    runs-on: ubuntu-latest #最新のubuntu利用
 
+    #ジョブに関連して起動するサービス設定
     services:
+      #MySQL設定
       mysql.test:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -24,27 +30,29 @@ jobs:
           MYSQL_USER: ${{ env.DB_USERNAME }}
           MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
           MYSQL_ALLOW_EMPTY_PASSWORD: 1
-        options: >-
+        options: >- #>-はYAMLで複数行にわたるコマンドの記述方法
           --health-cmd "mysqladmin ping"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        #--health-〇〇はヘルスチェックと言われるもの。タイミングがずれるのを防ぐ記述
 
+    #ジョブで実行するタスク
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP
+      - uses: actions/checkout@v2 #リポジトリのチェックアウト(テスト環境にファイルの一式がDLされる)
+      - name: Setup PHP #PHPをセットアップ
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
           tools: composer:v2
-      - name: Copy .env
+      - name: Copy .env #runの部分でテスト用の環境変数の設定ファイルをexample→testingへコピー
         run: cp .env.example .env.testing
-      - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+      - name: Install Dependencies #依存しているパッケージをDL
+        if: steps.cache.outputs.cache-hit != 'true' #ifでキャッシュが利用できる場合はキャッシュ利用
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: Generate key
+      - name: Generate key #.env.testingにAPP＿KEYを設定する。
         run: php artisan key:generate --env testing
-      - name: Set hostname
+      - name: Set hostname #サービスを起動した際にどこに接続するか、ホスト名の設定
         run: sudo echo "127.0.0.1 mysql.test" | sudo tee -a /etc/hosts
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
+      - name: Execute tests (Unit and Feature tests) via PHPUnit #PHPUnitの実行
         run: vendor/bin/phpunit

@@ -1,4 +1,5 @@
-@auth <!-- ログインユーザへの表示 -->
+@auth
+    <!-- ログインユーザへの表示 -->
     <div class="p-4">
         <!-- 空のテキストエリアを用意し、投稿ボタンを押下するとtweet.createへ -->
         <form action="{{ route('tweet.create') }}" method="post" enctype="multipart/form-data">
@@ -28,7 +29,8 @@
         </form>
     </div>
 @endauth
-@guest <!-- 未ログインユーザへの表示 -->
+@guest
+    <!-- 未ログインユーザへの表示 -->
     <div class="flex flex-wrap justify-center">
         <div class="w-1/2 p-4 flex flex-wrap justify-evenly">
             <x-element.button-a :href="route('login')">ログイン</x-element.button-a>
