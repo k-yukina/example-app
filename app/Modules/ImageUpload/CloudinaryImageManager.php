@@ -7,6 +7,7 @@ use Cloudinary\Cloudinary;
 
 class CloudinaryImageManager implements ImageManagerInterface
 {
+
     public function __construct(private Cloudinary $cloudinary)
     {
     }
@@ -14,12 +15,12 @@ class CloudinaryImageManager implements ImageManagerInterface
     /**
      * @throws \Cloudinary\Api\Exception\ApiError
      */
-public function save($file): string
-{
-    return $this->cloudinary
-        ->uploadApi()
-        ->upload(is_string($file) ? $file : $file->getRealPath())['public_id'];
-}
+    public function save($file): string
+    {
+        return $this->cloudinary
+            ->uploadApi()
+            ->upload(is_string($file) ? $file : $file->getRealPath())['public_id'];
+    }
 
     /**
      * @throws \Cloudinary\Api\Exception\ApiError

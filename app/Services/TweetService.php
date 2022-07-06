@@ -2,18 +2,17 @@
 
 namespace App\Services;
 
-use App\Models\Tweet;
-use Carbon\Carbon;
 use App\Models\Image;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Tweet;
 use App\Modules\ImageUpload\ImageManagerInterface;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class TweetService
 {
-public function __construct(private ImageManagerInterface $imageManager)
-{
-}
+    public function __construct(private ImageManagerInterface $imageManager)
+    {
+    }
 
     //一覧で全てのつぶやきを取得するメソッド
     public function getTweets()
@@ -85,7 +84,6 @@ public function __construct(private ImageManagerInterface $imageManager)
                 //画像を削除
                 $image->delete();
             });
-
             //つぶやきを削除
             $tweet->delete();
         });

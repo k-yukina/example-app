@@ -17,7 +17,7 @@ class TweetServiceTest extends TestCase
     public function test_check_own_tweet()
     {
         //TweetServiceのインスタンス作成
-        $tweetService = new TweetService();
+        //$tweetService = new TweetService();
 
         //モック(DB接続しないようにするための処理)利用
         $mock = Mockery::mock('alias:App\Models\Tweet');
